@@ -22,6 +22,7 @@ LSTM_XY.py: LSTM model script (a two-level classification model for identifying 
 For details, please refer to our paper ‘Research on optimization of brain-controlled typing recognition based on imaginary handwriting’
 
 Disclaimer:
+
 This study is based on the research of Willett et al. For detailed steps, please refer to the paper 'High-performance brain-to-text communication via handwriting'
 
 
