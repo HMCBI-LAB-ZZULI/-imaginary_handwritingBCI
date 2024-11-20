@@ -12,15 +12,15 @@ from twpca import TWPCA
 from twpca.regularizers import curvature
 from characterDefinitions import getHandwritingCharacterDefinitions
 
-# 设置随机种子
+
 np.random.seed(42)
 
-# 设置数据路径
+# Setting the data path
 rootDir = '../handwritingBCIData/'
 dataDirs = ['choose your dataset']
 charDef = getHandwritingCharacterDefinitions()
 
-# 创建保存目录
+#Create a save directory
 outputDir = os.path.join(rootDir, 'RNNTrainingSteps', '(test)_TimeWarping')
 if not os.path.isdir(outputDir):
     os.mkdir(outputDir)
@@ -29,7 +29,7 @@ for dataDir in dataDirs:
     print('Warping dataset:', dataDir)
     dat = scipy.io.loadmat(os.path.join(rootDir, 'Datasets', dataDir, 'singleLetters.mat'))
 
-    # 归一化数据
+    #Normalize data
     trlIdx_all = []
     for char in charDef['charList']:
         neuralCube = dat['neuralActivityCube_' + char].astype(np.float64)
@@ -74,7 +74,7 @@ for dataDir in dataDirs:
     print('Saving', outputPath)
     scipy.io.savemat(outputPath, {'data': data_tsne})
 
-# 加载和准备数据进行KNN交叉验证
+# Loading and preparing data for KNN cross validation
 dataPath = os.path.join(outputDir, 't5.2019.05.08_warpedCubes.mat')
 mydata = scipy.io.loadmat(dataPath)
 data = mydata['data']
@@ -88,7 +88,7 @@ print('Accuracy scores:', scores)
 print('Mean accuracy:', np.mean(scores))
 print('Standard deviation:', np.std(scores))
 
-# 可视化t-SNE结果
+#Visualizing t-SNE Results
 colors = [
     'red', 'blue', 'green', 'purple', 'orange', 'yellow', 'black', 'gray', 'pink', 'brown', 'magenta'
 ]
