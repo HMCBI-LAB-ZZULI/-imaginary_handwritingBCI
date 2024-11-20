@@ -9,14 +9,14 @@ from makeSyntheticSentences import generateCharacterSequences, extractCharacterS
 from dataPreprocessing import normalizeSentenceDataCube
 
 
-# 初始化设置
+# Initial Setup
 def init_setup():
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
     os.environ["CUDA_VISIBLE_DEVICES"] = '0'
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-# 处理每个数据集
+# Process each dataset
 def process_dataset(rootDir, dataDir, cvParts, charDef):
     logging.info(f'Processing {dataDir}')
 
@@ -33,7 +33,7 @@ def process_dataset(rootDir, dataDir, cvParts, charDef):
                 os.path.join(rootDir, 'RNNTrainingSteps', f'trainTestPartitions_{cvPart}.mat'))
             trainPartitionIdx = cvPartFile[f'{dataDir}_train']
 
-            # 移除句子中的hashmarks (#)
+            # Remove hashmarks (#) from sentences
             for x in range(sentenceDat['sentencePrompt'].shape[0]):
                 sentenceDat['sentencePrompt'][x, 0][0] = sentenceDat['sentencePrompt'][x, 0][0].replace('#', '')
 
@@ -59,7 +59,7 @@ def process_dataset(rootDir, dataDir, cvParts, charDef):
             continue
 
 
-# 生成合成数据
+# Generating synthetic data
 def generate_synthetic_data(rootDir, dataDir, cvParts, nParallelProcesses):
     logging.info(f'Generating synthetic data for {dataDir}')
 
