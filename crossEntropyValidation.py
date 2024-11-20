@@ -6,13 +6,13 @@ import scipy.io
 
 rootDir = '../handwritingBCIData/'
 mydata = scipy.io.loadmat(rootDir + 'your source')
-# 加载数据
-data = mydata['data']  # (837, -1) 的数据
+# Loading data
+data = mydata['data']  # (837, -1) 
 
-# 将数据和标签合并成一个大矩阵
+# Combine the data and labels into one large matrix
 labels_all = np.concatenate([[i] * 27 for i in range(31)])
 
-# 将数据拆分为训练集和测试集
+# Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(data, labels_all, test_size=0.2, random_state=41)
 
 # Create KNN model
