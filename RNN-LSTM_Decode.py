@@ -9,15 +9,15 @@ rootDir = '../handwritingBCIData/'
 
 def handle_segment(eeg_data, start_idx, end_idx, model, target_info):
     """
-    处理 segment 数据的函数
+   Functions that process segment data
     """
-    # 处理长度不足的情况，补零填充或截断
+    #To handle insufficient length, fill with zeros or truncate
     segment = eeg_data[:, start_idx:end_idx, :]
     if segment.shape[1] < target_info['max_length']:
         padded_segment = np.zeros((segment.shape[0], target_info['max_length'], segment.shape[2]))
         padded_segment[:, :segment.shape[1], :] = segment
         segment = padded_segment
-    # 如果长度超过 max_length，截断
+    #If the length exceeds max_length, truncate
     segment = segment[:, :target_info['max_length'], :]
     prediction = model.predict(segment)
     predicted_label = target_info['class_mapping'][np.argmax(prediction).item()]
@@ -32,7 +32,7 @@ def evaluateRNNOutput(rnnOutput, rnninput , numBinsPerSentence, trueText, charDe
     lgit = rnnOutput[:, :, 0:-1]
     charStart = rnnOutput[:, :, -1]
 
-    target_characters1 = ['x', 'y']  # 目标字符列表
+    target_characters1 = ['x', 'y']  # Target Character List
     target_characters2 = ['r', 'n', 'h']
 
     model1 = tf.keras.models.load_model(rootDir + 'RNNTrainingSteps/special_character/group1/siamese_model001.h5')
@@ -65,8 +65,8 @@ def evaluateRNNOutput(rnnOutput, rnninput , numBinsPerSentence, trueText, charDe
         transIdx = transIdx[:, 0]
 
         for mismatch in mismatches:
-            x = mismatch[0]  # 获取x坐标
-            y = mismatch[1]  # 获取y坐标
+            x = mismatch[0]  # Get the x coordinate
+            y = mismatch[1]  #Get the y coordinate
             if thisTrueText[x - 1] in target_characters1:
                 predicted_label = handle_segment(eeg_data, transIdx[y - 1], transIdx[y] if y < len(transIdx) - 1 else endIdx[0],
                                                  model1, target_info={'class_mapping': {0: 'x', 1: 'y'}, 'max_length': 87})
@@ -98,8 +98,8 @@ def evaluateRNNOutput(rnnOutput, rnninput , numBinsPerSentence, trueText, charDe
         transIdx = transIdx[:, 0]
 
         for mismatch in mismatches:
-            x = mismatch[0]  # 获取x坐标
-            y = mismatch[1]  # 获取y坐标
+            x = mismatch[0]  # Get the x coordinate
+            y = mismatch[1]  # Get the y coordinate
             if thisTrueText[x - 1] in target_characters2:
                 predicted_label = handle_segment(eeg_data, transIdx[y - 1], transIdx[y] if y < len(transIdx) - 1 else endIdx[0],
                                                  model2,  target_info={'class_mapping': {0: 'r', 1: 'n', 2: 'h'}, 'max_length': 75})
@@ -178,9 +178,9 @@ def calculate_edit_distance(reference, prediction):
                 mismatch_positions.append((i, j))
                 i -= 1
                 j -= 1
-            elif d[i][j - 1] > d[i - 1][j]:  # 删除错误或相同
+            elif d[i][j - 1] > d[i - 1][j]:  # Delete error or same
                 i -= 1
-            elif d[i][j - 1] < d[i - 1][j]:  # 插入错误或相同
+            elif d[i][j - 1] < d[i - 1][j]:  # Insert error or same
                 mismatch_positions.append((i, j))
                 j -= 1
             else:
