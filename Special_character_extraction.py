@@ -4,14 +4,14 @@ import scipy.io
 import os
 import warnings
 
-# 初始化设置
+# Initialization settings
 def init_setup():
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     os.environ["CUDA_VISIBLE_DEVICES"] = '1'
     warnings.simplefilter(action='ignore', category=FutureWarning)
 
-# 加载和处理数据
+# Loading and processing data
 def process_data(rootDir, dataDirs, cvPart, target_characters, group_number):
     rnnOutputDir = cvPart
     inferenceSaveDir = os.path.join(rootDir, 'RNNTrainingSteps', 'YOUR_SPCA_INPUT_RNNInference', rnnOutputDir)
@@ -23,7 +23,7 @@ def process_data(rootDir, dataDirs, cvPart, target_characters, group_number):
         specdat = {'segments': [], 'labels': []}
         sentenceDat = scipy.io.loadmat(os.path.join(rootDir, 'Datasets', dataset, 'sentences.mat'))
         sentences = sentenceDat['sentencePrompt']
-        # 加载要提取的数据集和对应标签
+        # Load the dataset and corresponding labels to be extracted
         eeg_data = scipy.io.loadmat(os.path.join(inferenceSaveDir, f'{dataset}_****.mat'))['inputFeatures']
         labels_str = os.path.join(rootDir, 'RNNTrainingSteps', '****_HMMLabels', cvPart, f'{dataset}_timeSeriesLabels.mat')
         labels = scipy.io.loadmat(labels_str)
@@ -44,7 +44,7 @@ def process_data(rootDir, dataDirs, cvPart, target_characters, group_number):
         scipy.io.savemat(save_path, specdat)
         print(f'Saved processed data to {save_path}')
 
-# 主函数
+
 def main():
     init_setup()
     rootDir = '../handwritingBCIData/'
