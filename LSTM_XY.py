@@ -76,4 +76,4 @@ test_loss, test_acc = model.evaluate(test_data_np, test_labels)
 print('Test accuracy:', test_acc)
 
 # Save the model
-model.save(os.path.join(rootDir, 'RNNTrainingSteps/special_character/group1/siamese_model001.h5'))
+model.save(os.path.join(rootDir, 'your_path/siamese_model001.h5'))
