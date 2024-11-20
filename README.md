@@ -5,13 +5,21 @@ step1.py: time warping + character classification accuracy calculation + t-SNE v
 
 step2.py: Use the fitted character template to label the sentence signal through the HMM algorithm
 
+step3.py:Synthetic Sentences
+
 
 steps 4-5: RNN Training & Inference
 
 
 step 6: Bigram Language Model
 
-step 7: GPT-2 Rescoring
+Kaldi(https://github.com/kaldi-asr/kaldi)
+
+Puigcerver's custom Kaldi decoders(https://github.com/jpuigcerver/kaldi-decoders)
+
+Bigram language model files(https://datadryad.org/stash/dataset/doi:10.5061/dryad.wh70rxwmv)
+
+step 7: GPT-2 Rescoring（https://github.com/openai/gpt-2）
 
 RNN-LSTM_Decode.py: The core script for the decoding step of the two-level network classifier.
 
