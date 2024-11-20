@@ -32,12 +32,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 # this is where we're going to save the RNN outputs
 inferenceSaveDir = os.path.join(rootDir, 'RNNTrainingSteps/_RNNInference', rnnOutputDir)
 
-# 获取字符定义
+# Get character definition
 charDef = getHandwritingCharacterDefinitions()
 
 def handle_segment(eeg_data, start_idx, end_idx, model, target_info):
     """
-    处理 segment 数据的函数
+    Functions that process segment data
     """
     segment = eeg_data[:, start_idx:end_idx, :]
     if segment.shape[1] < target_info['max_length']:
